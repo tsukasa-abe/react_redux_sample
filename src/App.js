@@ -1,31 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-const App = () => {
-  const profiles = [
-    { name: "Taro", age: 10 },
-    { name: "Hanako", age: 5 },
-    // ageがisRequiredなため、下記を記述しているとエラーがでる
-    // { name: "NoName" }
-  ]
-  return (
-    <div>
-      {
-        profiles.map((profile, index) => {
-          return <User name={profile.name} age={profile.age} key={index}/>
-        })
-      }
-    </div>
-  )
-}
+const App = () => (<Counter></Counter>)
 
-const User = (props) => {
-  return <div>Hi, I am {props.name}!, and {props.age} years old!</div>
-}
+class Counter extends Component {
+  // 初期化処理で実行される
+  constructor(props) {
+    super(props)
+    this.state = { count: 0 }
+  }
 
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number.isRequired
+  handlePlusButton = () => {
+    // setStateが実行されるとコールバックでrenderが実行される（状態をかえるときは必ずsetStateを使用する）
+    this.setState({ count: this.state.count + 1 })
+  }
+
+  handleMinusButon = () => {
+    this.setState({ count: this.state.count - 1 })
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div>count: { this.state.count }</div>
+        <button onClick={this.handlePlusButton}>+1</button>
+        <button onClick={this.handleMinusButon}>-1</button>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
